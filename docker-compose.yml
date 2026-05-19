@@ -23,7 +23,18 @@ services:
     shm_size: "256m"
     restart: unless-stopped
 
+  gitlab-runner:
+    image: gitlab/gitlab-runner:latest
+    container_name: local-gitlab-runner
+    depends_on:
+      - gitlab
+    volumes:
+      - gitlab-runner-config:/etc/gitlab-runner
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+
 volumes:
   gitlab-config:
   gitlab-logs:
   gitlab-data:
+  gitlab-runner-config:
