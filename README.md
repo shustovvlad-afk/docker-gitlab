@@ -70,3 +70,5 @@ Remove GitLab volumes too:
 ```sh
 docker compose down -v
 ```
+
+.\gitlab-runner.exe register  --url http://localhost:8929  --token glrt-YUJk_tWdxHGeu55fPLLztG86MQpwOjEKdDozCnU6MQ8.01.171wt2yo6
