@@ -43,8 +43,20 @@ docker logs -f local-gitlab
 ## Windows runner
 
 Project `root/onecconnect` has a project runner with tag `windows`.
-Install GitLab Runner on a Windows machine, then run PowerShell as
-Administrator:
+Install GitLab Runner on a Windows machine and run PowerShell as
+Administrator.
+
+Current test runner settings:
+
+- GitLab URL: `http://192.168.0.104:8929`
+- Runner directory: `C:\GitLab-Runner`
+- Runner name: `local-windows-runner`
+- Executor: `shell`
+- Shell: `powershell`
+- Tag: `windows`
+- Token: `glrt-YUJk_tWdxHGeu55fPLLztG86MQpwOjEKdDozCnU6MQ8.01.171wt2yo6`
+
+Fresh install and registration:
 
 ```powershell
 $GITLAB_URL = "http://192.168.0.104:8929"
@@ -55,6 +67,20 @@ Invoke-WebRequest -Uri https://gitlab-runner-downloads.s3.amazonaws.com/latest/b
 .\gitlab-runner.exe install
 .\gitlab-runner.exe start
 ```
+
+If `C:\GitLab-Runner` already exists, check the current runner instead of
+registering a duplicate:
+
+```powershell
+cd C:\GitLab-Runner
+.\gitlab-runner.exe verify --config C:\GitLab-Runner\config.toml
+.\gitlab-runner.exe status
+```
+
+Expected result:
+
+- `Verifying runner... is valid`
+- `gitlab-runner: Service is running`
 
 If the Mac IP changes, replace `192.168.0.104` with the current IP address of
 the Mac running GitLab.
@@ -70,5 +96,3 @@ Remove GitLab volumes too:
 ```sh
 docker compose down -v
 ```
-
-.\gitlab-runner.exe register  --url http://localhost:8929  --token glrt-YUJk_tWdxHGeu55fPLLztG86MQpwOjEKdDozCnU6MQ8.01.171wt2yo6
